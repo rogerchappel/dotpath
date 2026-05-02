@@ -1,0 +1,10 @@
+{
+  "project": "dotpath",
+  "safety": {
+    "defaultInstallMode": "dry-run",
+    "overwritePolicy": "never overwrite existing real files",
+    "secretPolicy": "deny common tokens, SSH private keys, private paths, and host-specific SSH config"
+  },
+  "gates": ["npm test", "npm run check:syntax", "npm run check:secrets"],
+  "agentRules": ["Use isolated worktrees", "Do not inspect private home dotfiles", "Publish sanitized examples only"]
+}
