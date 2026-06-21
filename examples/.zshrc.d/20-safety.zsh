@@ -1,4 +1,5 @@
 # dotpath: safety rails that do not assume private tooling.
+# shellcheck shell=bash
 
 alias rm='rm -i'
 alias cp='cp -i'
