@@ -78,10 +78,16 @@ node bin/dotpath.js scan --path .
 npm test
 npm run check:syntax
 npm run check:secrets
+npm run smoke
+npm run package:smoke
+npm run release:check
 npm run validate
 ```
 
-`shellcheck` is used when available; otherwise syntax checks still run.
+`release:check` runs the test suite, shell syntax checks, the secret scan,
+the fixture-backed CLI smoke command, package dry-run output, and the broader
+validation script. `shellcheck` is used when available; otherwise syntax checks
+still run.
 
 ## Inspiration
 
