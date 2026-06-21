@@ -10,15 +10,40 @@
   "exports": {
     ".": "./src/index.js"
   },
-  "files": ["bin", "src", "examples", "docs", "scripts", "README.md", "LICENSE"],
+  "files": [
+    "bin",
+    "src",
+    "examples",
+    "docs",
+    "scripts",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "test": "node --test tests/*.test.js",
     "check:syntax": "bash -n scripts/validate.sh && find examples scripts tests/fixtures -name '*.sh' -print0 | xargs -0 -n1 bash -n",
     "check:secrets": "node bin/dotpath.js scan --path .",
     "validate": "bash scripts/validate.sh"
   },
-  "keywords": ["dotfiles", "zsh", "git-aliases", "agentic-workflow", "bootstrap", "secret-scanner"],
+  "keywords": [
+    "dotfiles",
+    "zsh",
+    "git-aliases",
+    "agentic-workflow",
+    "bootstrap",
+    "secret-scanner"
+  ],
   "author": "Roger Chappel",
   "license": "MIT",
-  "engines": { "node": ">=20" }
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rogerchappel/dotpath.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rogerchappel/dotpath/issues"
+  },
+  "homepage": "https://github.com/rogerchappel/dotpath#readme"
 }
