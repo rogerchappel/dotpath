@@ -2,10 +2,10 @@
 
 ## v0.1
 
-- Dry-run symlink planner.
-- Secret scanner.
-- Safe uninstall and rollback notes.
-- Sanitized zsh, git, editor, and env examples.
+- Keep the dry-run symlink planner safe by default.
+- Keep the secret scanner focused on obvious public-dotfiles hazards.
+- Verify safe uninstall and rollback notes with temp HOME tests.
+- Ship sanitized zsh, git, editor, and env examples with package smoke checks.
 
 ## Later
 

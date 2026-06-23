@@ -1,4 +1,5 @@
 # dotpath: small, boring PATH helpers.
+# shellcheck shell=bash
 # Keep this public-safe: no machine-specific private directories.
 
 _dotpath_prepend_path() {

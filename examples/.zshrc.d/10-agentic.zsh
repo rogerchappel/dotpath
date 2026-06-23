@@ -1,4 +1,5 @@
 # dotpath: agentic development conveniences.
+# shellcheck shell=bash
 # These are intentionally generic; customize in private files if needed.
 
 alias gs='git status --short --branch'
@@ -7,7 +8,7 @@ alias gds='git diff --staged --stat'
 alias ll='ls -lah'
 
 mkcd() {
-  mkdir -p "$1" && cd "$1"
+  mkdir -p "$1" && cd "$1" || return
 }
 
 # Prefer explicit agent workspaces over editing main checkouts directly.

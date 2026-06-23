@@ -11,9 +11,8 @@ Public dotfiles are a nice signal of craft, but accidental secrets are not cute.
 ## Quick start
 
 ```bash
-git clone https://github.com/rogerchappel/dotpath.git
-cd dotpath
-npm test
+npm install
+npm run release:check
 node bin/dotpath.js install --dry-run
 ```
 
@@ -34,6 +33,9 @@ node bin/dotpath.js install --uninstall --apply
 
 # explain rollback without touching files
 node bin/dotpath.js install --rollback-plan
+
+# print CLI version
+node bin/dotpath.js --version
 ```
 
 ## What it installs
@@ -78,10 +80,13 @@ node bin/dotpath.js scan --path .
 npm test
 npm run check:syntax
 npm run check:secrets
+npm run smoke
+npm run package:smoke
+npm run release:check
 npm run validate
 ```
 
-`shellcheck` is used when available; otherwise syntax checks still run.
+`release:check` runs the test suite, shell syntax checks, the secret scan, the fixture-backed CLI smoke script, package dry-run output, and the broader validation script. `shellcheck` is used when available; otherwise syntax checks still run.
 
 ## Inspiration
 
