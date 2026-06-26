@@ -16,6 +16,13 @@ npm run release:check
 node bin/dotpath.js install --dry-run
 ```
 
+Install the CLI from npm after release:
+
+```bash
+npm install -g dotpath
+dotpath install --dry-run
+```
+
 `install` is dry-run by default. It prints the symlinks it would create and does not mutate your HOME unless you pass `--apply`.
 
 ```bash
@@ -84,6 +91,7 @@ npm run smoke
 npm run package:smoke
 npm run release:check
 npm run validate
+npm pack --dry-run
 ```
 
 `release:check` runs the test suite, shell syntax checks, the secret scan, the fixture-backed CLI smoke script, package dry-run output, and the broader validation script. `shellcheck` is used when available; otherwise syntax checks still run.
