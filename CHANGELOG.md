@@ -9,7 +9,11 @@ format and uses semantic versioning when versioned releases are published.
 
 ### Added
 
-- Initial project setup.
+- Release-candidate package metadata, npm pack dry-run, and CI release check path.
+- Scripted CLI smoke coverage for help, version, dry-run install, and example scanning.
+- README verification commands that match the local release check.
+- npm package allowlist now includes security, changelog, contributing, and code
+  of conduct files for install-time review.
 
 ## Release Links
 
