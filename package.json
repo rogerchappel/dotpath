@@ -29,7 +29,7 @@
     "check:secrets": "node bin/dotpath.js scan --path .",
     "validate": "bash scripts/validate.sh",
     "smoke": "bash scripts/smoke.sh",
-    "package:smoke": "npm pack --dry-run",
+    "package:smoke": "node scripts/package-smoke.mjs",
     "release:check": "npm test && npm run check:syntax && npm run check:secrets && npm run smoke && npm run package:smoke && npm run validate"
   },
   "keywords": [
