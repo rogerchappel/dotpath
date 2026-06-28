@@ -25,12 +25,13 @@
   ],
   "scripts": {
     "test": "node --test tests/*.test.js",
+    "check": "npm run check:syntax && npm run check:secrets",
     "check:syntax": "bash -n scripts/validate.sh && find examples scripts tests/fixtures -name '*.sh' -print0 | xargs -0 -n1 bash -n",
     "check:secrets": "node bin/dotpath.js scan --path .",
     "validate": "bash scripts/validate.sh",
     "smoke": "bash scripts/smoke.sh",
     "package:smoke": "node scripts/package-smoke.mjs",
-    "release:check": "npm test && npm run check:syntax && npm run check:secrets && npm run smoke && npm run package:smoke && npm run validate"
+    "release:check": "npm test && npm run check && npm run smoke && npm run package:smoke && npm run validate"
   },
   "keywords": [
     "dotfiles",
