@@ -8,7 +8,7 @@ Dotpath is not a dump of a real home directory. It is a curated, boring-on-purpo
 
 Public dotfiles are a nice signal of craft, but accidental secrets are not cute. Dotpath keeps the good part — repeatable setup and taste — while making the risky parts explicit.
 
-## Quick start
+## Quickstart
 
 ```bash
 npm install
@@ -24,6 +24,8 @@ dotpath install --dry-run
 ```
 
 `install` is dry-run by default. It prints the symlinks it would create and does not mutate your HOME unless you pass `--apply`.
+
+## Usage
 
 ```bash
 # preview
