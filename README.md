@@ -75,6 +75,16 @@ Run it before publishing:
 node bin/dotpath.js scan --path .
 ```
 
+For a promotion-ready release review that captures the dry-run install plan and
+scanner output:
+
+```bash
+bash demo/public-release-review.sh
+```
+
+See [docs/tutorials/public-release-review.md](docs/tutorials/public-release-review.md)
+for the generated evidence files.
+
 ## Agent-friendly workflow 🤖
 
 1. Work in an isolated git worktree.
