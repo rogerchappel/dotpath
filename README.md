@@ -85,6 +85,15 @@ bash demo/public-release-review.sh
 See [docs/tutorials/public-release-review.md](docs/tutorials/public-release-review.md)
 for the generated evidence files.
 
+To demonstrate apply and uninstall without touching your real HOME:
+
+```bash
+bash demo/run-temp-home-apply-cycle.sh
+```
+
+See [docs/tutorials/temp-home-apply-cycle.md](docs/tutorials/temp-home-apply-cycle.md)
+for the reversible temp-HOME flow.
+
 ## Agent-friendly workflow 🤖
 
 1. Work in an isolated git worktree.
