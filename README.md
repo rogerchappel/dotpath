@@ -94,6 +94,17 @@ bash demo/run-temp-home-apply-cycle.sh
 See [docs/tutorials/temp-home-apply-cycle.md](docs/tutorials/temp-home-apply-cycle.md)
 for the reversible temp-HOME flow.
 
+For a first-machine bootstrap review that records a dry-run install plan,
+rollback notes, and an example-tree secret scan in a temporary HOME:
+
+```bash
+bash demo/first-machine-bootstrap-review.sh
+```
+
+See
+[`docs/tutorials/first-machine-bootstrap-review.md`](docs/tutorials/first-machine-bootstrap-review.md)
+for the artifact checklist.
+
 ## Agent-friendly workflow 🤖
 
 1. Work in an isolated git worktree.
