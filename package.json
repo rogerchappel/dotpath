@@ -1,6 +1,7 @@
 {
   "name": "dotpath",
   "version": "0.1.0",
+  "private": true,
   "description": "Secret-safe public dotfiles starter for agentic dev workflows.",
   "type": "module",
   "bin": {

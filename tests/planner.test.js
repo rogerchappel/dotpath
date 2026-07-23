@@ -29,6 +29,32 @@ test('existing real file is reported as conflict', () => {
   assert.ok(plan.actions.some((action) => action.type === 'conflict' && action.reason === 'target-exists'));
 });
 
+test('a late conflict prevents every planned filesystem mutation', () => {
+  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'dotpath-home-'));
+  const conflict = path.join(home, '.config', 'git', 'aliases.dotpath');
+  fs.mkdirSync(path.dirname(conflict), { recursive: true });
+  fs.writeFileSync(conflict, 'mine');
+
+  const plan = createInstallPlan({ repoRoot, home });
+  assert.throws(() => applyPlan(plan), /Refusing to apply unsafe action: conflict/);
+  assert.equal(fs.existsSync(path.join(home, '.zshrc.d', '00-path.zsh')), false);
+  assert.equal(fs.readFileSync(conflict, 'utf8'), 'mine');
+});
+
+test('a missing source prevents every planned filesystem mutation', () => {
+  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'dotpath-home-'));
+  const incompleteRepo = fs.mkdtempSync(path.join(os.tmpdir(), 'dotpath-repo-'));
+  fs.mkdirSync(path.join(incompleteRepo, 'examples', 'git'), { recursive: true });
+  fs.copyFileSync(
+    path.join(repoRoot, 'examples', 'git', 'gitconfig.aliases'),
+    path.join(incompleteRepo, 'examples', 'git', 'gitconfig.aliases')
+  );
+
+  const plan = createInstallPlan({ repoRoot: incompleteRepo, home });
+  assert.throws(() => applyPlan(plan), /Refusing to apply unsafe action: missing-source/);
+  assert.equal(fs.existsSync(path.join(home, '.config', 'git', 'aliases.dotpath')), false);
+});
+
 test('uninstall removes only dotpath-owned symlinks', () => {
   const home = fs.mkdtempSync(path.join(os.tmpdir(), 'dotpath-home-'));
   applyPlan(createInstallPlan({ repoRoot, home }));

@@ -7,6 +7,15 @@ format and uses semantic versioning when versioned releases are published.
 
 ## [Unreleased]
 
+### Changed
+
+- Resolve default install sources from the installed package instead of the
+  caller's working directory.
+- Preflight the complete apply plan so conflicts and missing sources cause zero
+  filesystem mutations.
+- Mark the package private and replace the misleading npm registry installation
+  command because the `dotpath` registry name belongs to another project.
+
 ### Added
 
 - Release-candidate package metadata, npm pack dry-run, and CI release check path.

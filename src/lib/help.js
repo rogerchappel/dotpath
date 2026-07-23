@@ -7,5 +7,6 @@ Usage:
   dotpath --version
   dotpath help
 
-Defaults are safe: install is a dry-run planner unless --apply is passed.`);
+Defaults are safe: install is a dry-run planner unless --apply is passed.
+Install uses this CLI's bundled examples; --repo selects a different checkout.`);
 }

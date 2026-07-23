@@ -48,6 +48,13 @@ function planRollback(source, target, entry) {
 }
 
 export function applyPlan(plan) {
+  const unsafeAction = plan.actions.find(
+    (action) => action.type === 'conflict' || action.type === 'missing-source'
+  );
+  if (unsafeAction) {
+    throw new Error(`Refusing to apply unsafe action: ${unsafeAction.type} ${unsafeAction.target}`);
+  }
+
   const applied = [];
   for (const action of plan.actions) {
     if (action.type === 'link') {
@@ -57,8 +64,6 @@ export function applyPlan(plan) {
     } else if (action.type === 'unlink') {
       fs.unlinkSync(action.target);
       applied.push(action);
-    } else if (action.type === 'conflict' || action.type === 'missing-source') {
-      throw new Error(`Refusing to apply unsafe action: ${action.type} ${action.target}`);
     }
   }
   return applied;
