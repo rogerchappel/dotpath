@@ -16,14 +16,23 @@ npm run release:check
 node bin/dotpath.js install --dry-run
 ```
 
-Install the CLI from npm after release:
+The `dotpath` name on npm belongs to an unrelated project. This repository is
+therefore not published under that name. To install this CLI globally from a
+verified checkout:
 
 ```bash
-npm install -g dotpath
+git clone https://github.com/rogerchappel/dotpath.git
+cd dotpath
+npm install
+npm run release:check
+npm install -g .
 dotpath install --dry-run
 ```
 
 `install` is dry-run by default. It prints the symlinks it would create and does not mutate your HOME unless you pass `--apply`.
+The CLI uses the examples bundled with its installation by default, regardless
+of the directory where it is launched. Pass `--repo PATH` only to plan against
+a different dotpath checkout.
 
 ## Usage
 
@@ -58,7 +67,10 @@ node bin/dotpath.js --version
 
 ## Safety model 🧯
 
-Dotpath refuses to overwrite existing real files. Conflicts are reported in the plan. Apply mode only creates symlinks for missing targets or removes symlinks that point back to this repo during uninstall.
+Dotpath refuses to overwrite existing real files. Conflicts are reported in the
+plan. Before apply mode changes anything, it checks the complete plan for
+conflicts and missing sources. Apply mode only creates symlinks for missing
+targets or removes symlinks that point back to this repo during uninstall.
 
 The scanner blocks common hazards:
 
