@@ -6,7 +6,17 @@ import { applyPlan, createInstallPlan, renderPlan } from '../lib/planner.js';
 const packagedRepoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 
 export async function runInstall(argv) {
-  const { flags } = parseArgs(argv);
+  const { flags } = parseArgs(argv, {
+    command: 'install',
+    boolean: ['apply', 'dry-run', 'uninstall', 'rollback-plan'],
+    value: ['home', 'repo']
+  });
+  if (flags.has('apply') && flags.has('dry-run')) {
+    throw new Error('Options --apply and --dry-run cannot be used together.');
+  }
+  if (flags.has('apply') && flags.has('rollback-plan')) {
+    throw new Error('Option --rollback-plan cannot be used with --apply.');
+  }
   const apply = flags.has('apply');
   const dryRun = flags.has('dry-run') || !apply;
   const plan = createInstallPlan({

@@ -33,6 +33,9 @@ dotpath install --dry-run
 The CLI uses the examples bundled with its installation by default, regardless
 of the directory where it is launched. Pass `--repo PATH` only to plan against
 a different dotpath checkout.
+Options are strict: unknown options, missing option values, duplicate options,
+and contradictory modes such as `--dry-run --apply` exit with an error before
+the install plan can change any files.
 
 ## Usage
 
