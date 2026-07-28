@@ -2,7 +2,10 @@ import { parseArgs, flagPath } from '../lib/args.js';
 import { scanPath } from '../lib/scanner.js';
 
 export async function runScan(argv) {
-  const { flags } = parseArgs(argv);
+  const { flags } = parseArgs(argv, {
+    command: 'scan',
+    value: ['path']
+  });
   const target = flagPath(flags, 'path', process.cwd());
   const findings = scanPath(target);
   if (findings.length === 0) {

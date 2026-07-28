@@ -1,4 +1,6 @@
-export function parseArgs(argv) {
+export function parseArgs(argv, { command = 'command', boolean = [], value = [] } = {}) {
+  const booleanFlags = new Set(boolean);
+  const valueFlags = new Set(value);
   const flags = new Map();
   const positionals = [];
   for (let index = 0; index < argv.length; index += 1) {
@@ -8,7 +10,23 @@ export function parseArgs(argv) {
       continue;
     }
     const [key, inlineValue] = item.slice(2).split('=', 2);
+    if (!key || (!booleanFlags.has(key) && !valueFlags.has(key))) {
+      throw new Error(`Unknown option for ${command}: --${key || '(empty)'}\nRun: dotpath help`);
+    }
+    if (flags.has(key)) {
+      throw new Error(`Option --${key} may only be specified once.`);
+    }
+    if (booleanFlags.has(key)) {
+      if (inlineValue !== undefined) {
+        throw new Error(`Option --${key} does not accept a value.`);
+      }
+      flags.set(key, true);
+      continue;
+    }
     if (inlineValue !== undefined) {
+      if (inlineValue.length === 0) {
+        throw new Error(`Option --${key} requires a value.`);
+      }
       flags.set(key, inlineValue);
       continue;
     }
@@ -17,8 +35,11 @@ export function parseArgs(argv) {
       flags.set(key, next);
       index += 1;
     } else {
-      flags.set(key, true);
+      throw new Error(`Option --${key} requires a value.`);
     }
+  }
+  if (positionals.length > 0) {
+    throw new Error(`Unexpected argument for ${command}: ${positionals[0]}\nRun: dotpath help`);
   }
   return { flags, positionals };
 }
