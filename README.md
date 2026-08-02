@@ -30,6 +30,10 @@ dotpath install --dry-run
 ```
 
 `install` is dry-run by default. It prints the symlinks it would create and does not mutate your HOME unless you pass `--apply`.
+It fails before rendering a plan when neither `--home PATH` nor a non-empty
+`HOME` environment variable provides the destination; the current directory is
+never used as an implicit home. An explicit `--home PATH` takes precedence over
+`HOME` and is useful for safe previews and temporary apply/uninstall cycles.
 The CLI uses the examples bundled with its installation by default, regardless
 of the directory where it is launched. Pass `--repo PATH` only to plan against
 a different dotpath checkout.
