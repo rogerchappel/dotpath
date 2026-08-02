@@ -14,6 +14,17 @@ test('install plan defaults to safe link actions in empty temp HOME', () => {
   assert.ok(plan.actions.every((action) => action.type === 'link'));
 });
 
+test('install planning requires a non-empty home directory', () => {
+  assert.throws(
+    () => createInstallPlan({ repoRoot, home: '' }),
+    /Pass --home PATH or set HOME/
+  );
+  assert.throws(
+    () => createInstallPlan({ repoRoot, home: '   ' }),
+    /Pass --home PATH or set HOME/
+  );
+});
+
 test('apply is idempotent and converts second run to noop', () => {
   const home = fs.mkdtempSync(path.join(os.tmpdir(), 'dotpath-home-'));
   applyPlan(createInstallPlan({ repoRoot, home }));

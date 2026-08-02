@@ -5,7 +5,11 @@ import { ensureInsideHome, mkdirpFor, pathExists } from './fs-safe.js';
 
 export function createInstallPlan({ repoRoot, home, uninstall = false, rollbackPlan = false } = {}) {
   const resolvedRepo = path.resolve(repoRoot ?? process.cwd());
-  const resolvedHome = path.resolve(home ?? process.env.HOME ?? process.cwd());
+  const homePath = home ?? process.env.HOME;
+  if (typeof homePath !== 'string' || homePath.trim() === '') {
+    throw new Error('Cannot plan install without a home directory. Pass --home PATH or set HOME.');
+  }
+  const resolvedHome = path.resolve(homePath);
   const actions = [];
   for (const entry of manifest) {
     const source = path.join(resolvedRepo, entry.source);

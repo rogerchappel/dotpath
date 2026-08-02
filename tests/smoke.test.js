@@ -7,15 +7,43 @@ import test from 'node:test';
 
 const repoRoot = path.resolve(new URL('..', import.meta.url).pathname);
 const bin = path.join(repoRoot, 'bin', 'dotpath.js');
-const run = (args) => spawnSync(process.execPath, [bin, ...args], {
+const run = (args, options = {}) => spawnSync(process.execPath, [bin, ...args], {
   cwd: repoRoot,
-  encoding: 'utf8'
+  encoding: 'utf8',
+  ...options
 });
 
 test('CLI dry-run does not mutate temp HOME', () => {
   const home = fs.mkdtempSync(path.join(os.tmpdir(), 'dotpath-smoke-'));
   const result = spawnSync(process.execPath, [bin, 'install', '--home', home], { cwd: repoRoot, encoding: 'utf8' });
   assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /Dry-run only/);
+  assert.equal(fs.existsSync(path.join(home, '.zshrc.d')), false);
+});
+
+test('CLI rejects unset or empty HOME before rendering a plan', () => {
+  for (const home of [undefined, '']) {
+    const launchDirectory = fs.mkdtempSync(path.join(os.tmpdir(), 'dotpath-no-home-'));
+    const env = { ...process.env };
+    if (home === undefined) delete env.HOME;
+    else env.HOME = home;
+
+    const result = run(['install'], { cwd: launchDirectory, env });
+    assert.equal(result.status, 1, result.stderr);
+    assert.match(result.stderr, /Pass --home PATH or set HOME/);
+    assert.doesNotMatch(result.stdout, /dotpath plan|Dry-run only/);
+    assert.deepEqual(fs.readdirSync(launchDirectory), []);
+  }
+});
+
+test('CLI explicit --home works when HOME is unset', () => {
+  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'dotpath-explicit-home-'));
+  const env = { ...process.env };
+  delete env.HOME;
+
+  const result = run(['install', '--home', home], { env });
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, new RegExp(`home: ${home.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`));
   assert.match(result.stdout, /Dry-run only/);
   assert.equal(fs.existsSync(path.join(home, '.zshrc.d')), false);
 });
