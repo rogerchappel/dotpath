@@ -8,6 +8,7 @@ Usage:
   dotpath help
 
 Defaults are safe: install is a dry-run planner unless --apply is passed.
+Install requires --home PATH or a non-empty HOME environment variable.
 Install uses this CLI's bundled examples; --repo selects a different checkout.
 Unknown, malformed, duplicate, or contradictory options are rejected.`);
 }
