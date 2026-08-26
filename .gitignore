@@ -5,3 +5,8 @@ coverage/
 .env.*
 !.env.example
 npm-debug.log*
+
+# Demo evidence directories written by demo/*.sh in a source checkout
+.dotpath-apply-cycle/
+.dotpath-first-machine-review/
+.dotpath-release-review/
