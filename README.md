@@ -124,6 +124,12 @@ See
 [`docs/tutorials/first-machine-bootstrap-review.md`](docs/tutorials/first-machine-bootstrap-review.md)
 for the artifact checklist.
 
+These demos run from a source checkout and are not shipped in the published
+npm package; clone the repository and run `bash demo/<name>.sh` there. Each
+demo writes its evidence files into the checkout (`.dotpath-release-review/`,
+`.dotpath-apply-cycle/`, or `.dotpath-first-machine-review/`) and never touches
+your real HOME.
+
 ## Agent-friendly workflow 🤖
 
 1. Work in an isolated git worktree.

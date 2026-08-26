@@ -24,6 +24,14 @@ format and uses semantic versioning when versioned releases are published.
 - Canonical `check` script for syntax validation and the repository secret scan.
 - npm package allowlist now includes security, changelog, contributing, and code
   of conduct files for install-time review.
+- Shell syntax gate (`scripts/check-shell-syntax.sh`) that covers examples,
+  scripts, test fixtures, and the documented demo scripts.
+- Shellcheck coverage for `scripts/*.sh` and `demo/*.sh` in the validation gate.
+
+### Changed
+
+- README scopes the demo commands to source checkouts; the published npm
+  package does not ship the demo scripts.
 
 ## Release Links
 
