@@ -11,7 +11,7 @@ Public dotfiles are a nice signal of craft, but accidental secrets are not cute.
 ## Quickstart
 
 ```bash
-npm install
+npm ci
 npm run release:check
 node bin/dotpath.js install --dry-run
 ```
