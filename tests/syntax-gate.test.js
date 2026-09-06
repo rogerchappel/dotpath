@@ -26,6 +26,16 @@ test('shell syntax gate rejects a syntax error in any checked file', () => {
   assert.doesNotMatch(result.stderr, /syntax error: .*ok\.sh/);
 });
 
+test('shell syntax gate rejects a syntax error in a zsh asset', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'dotpath-syntax-broken-zsh-'));
+  fs.writeFileSync(path.join(dir, 'broken.zsh'), '#!/usr/bin/env zsh\nif then\n');
+
+  const result = runGate([dir]);
+
+  assert.notEqual(result.status, 0, `gate must fail; stdout=${result.stdout} stderr=${result.stderr}`);
+  assert.match(result.stderr, /syntax error: .*broken\.zsh/);
+});
+
 test('shell syntax gate accepts files that all parse cleanly', () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'dotpath-syntax-clean-'));
   fs.writeFileSync(path.join(dir, 'first.sh'), '#!/usr/bin/env bash\nexit 0\n');
@@ -42,4 +52,5 @@ test('default gate covers the documented demo scripts', () => {
 
   assert.equal(result.status, 0, result.stderr);
   assert.match(result.stdout, /demo \(3 file\(s\)\)/);
+  assert.match(result.stdout, /examples \(3 file\(s\)\)/);
 });
