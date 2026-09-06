@@ -9,6 +9,8 @@ format and uses semantic versioning when versioned releases are published.
 
 ### Changed
 
+- Parse shipped `.zsh` examples with Zsh in the shell syntax gate and assert
+  their coverage in regression tests.
 - Resolve default install sources from the installed package instead of the
   caller's working directory.
 - Preflight the complete apply plan so conflicts and missing sources cause zero

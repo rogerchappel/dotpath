@@ -152,10 +152,11 @@ npm run validate
 npm pack --dry-run
 ```
 
-`check` runs the shell syntax checks and repository secret scan. `release:check`
-runs the test suite, `check`, the fixture-backed CLI smoke script, package
-dry-run output, and the broader validation script. `shellcheck` is used when
-available; otherwise syntax checks still run.
+`check` parses `*.sh` files with Bash and `*.zsh` files with Zsh, then runs the
+repository secret scan. The default syntax gate includes all three shipped
+`examples/.zshrc.d` snippets. `release:check` runs the test suite, `check`, the
+fixture-backed CLI smoke script, package dry-run output, and the broader
+validation script. `shellcheck` adds static analysis when available.
 
 ## Inspiration
 
