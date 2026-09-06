@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Syntax-check every *.sh file under the canonical shell directories.
+# Syntax-check every *.sh and *.zsh file under the canonical shell directories.
 #
 # The historical `find ... | xargs -n1 bash -n` gate only checked the
 # directories explicitly listed in package.json, so documented demo scripts
@@ -26,11 +26,15 @@ for dir in "${dirs[@]}"; do
   count=0
   while IFS= read -r -d '' file; do
     count=$((count + 1))
-    if ! bash -n "$file"; then
+    case "$file" in
+      *.zsh) parser=(zsh -n) ;;
+      *) parser=(bash -n) ;;
+    esac
+    if ! "${parser[@]}" "$file"; then
       printf 'syntax error: %s\n' "$file" >&2
       failed=1
     fi
-  done < <(find "$search_root" -name '*.sh' -print0 2>/dev/null || true)
+  done < <(find "$search_root" \( -name '*.sh' -o -name '*.zsh' \) -print0 2>/dev/null || true)
   total=$((total + count))
   printf 'syntax ok: %s (%d file(s))\n' "$dir" "$count"
 done
