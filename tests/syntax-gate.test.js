@@ -47,6 +47,12 @@ test('shell syntax gate accepts files that all parse cleanly', () => {
   assert.match(result.stdout, /2 file\(s\)/);
 });
 
+test('CI runs the root secret scan explicitly', () => {
+  const workflow = fs.readFileSync(path.join(repoRoot, '.github', 'workflows', 'ci.yml'), 'utf8');
+
+  assert.match(workflow, /name: Scan repository for secrets\s+run: npm run check:secrets/);
+});
+
 test('default gate covers the documented demo scripts', () => {
   const result = runGate();
 
