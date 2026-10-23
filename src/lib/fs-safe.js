@@ -13,7 +13,7 @@ export function pathExists(filePath) {
 
 export function ensureInsideHome(home, target) {
   const relative = path.relative(path.resolve(home), path.resolve(target));
-  if (relative.startsWith('..') || path.isAbsolute(relative)) {
+  if (relative === '..' || relative.startsWith(`..${path.sep}`) || path.isAbsolute(relative)) {
     throw new Error(`Refusing to plan outside HOME: ${target}`);
   }
 }
