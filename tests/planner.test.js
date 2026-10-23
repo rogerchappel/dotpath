@@ -4,8 +4,16 @@ import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 import { applyPlan, createInstallPlan } from '../src/lib/planner.js';
+import { ensureInsideHome } from '../src/lib/fs-safe.js';
 
 const repoRoot = path.resolve(new URL('..', import.meta.url).pathname);
+
+test('home containment accepts dot-dot-prefixed descendants and rejects escapes', () => {
+  const home = path.join(os.tmpdir(), 'dotpath-home');
+  assert.doesNotThrow(() => ensureInsideHome(home, path.join(home, '..cache')));
+  assert.throws(() => ensureInsideHome(home, path.join(home, '..', 'outside')), /outside HOME/);
+  assert.throws(() => ensureInsideHome(home, path.resolve('/tmp', 'outside')), /outside HOME/);
+});
 
 test('install plan defaults to safe link actions in empty temp HOME', () => {
   const home = fs.mkdtempSync(path.join(os.tmpdir(), 'dotpath-home-'));
