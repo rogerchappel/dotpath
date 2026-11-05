@@ -17,8 +17,7 @@ node bin/dotpath.js install --dry-run
 ```
 
 The `dotpath` name on npm belongs to an unrelated project. This repository is
-therefore not published under that name. To install this CLI globally from a
-verified checkout:
+not published under that name; install globally from a verified checkout:
 
 ```bash
 git clone https://github.com/rogerchappel/dotpath.git
