@@ -4,14 +4,21 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
+import { fileURLToPath } from 'node:url';
 
-const repoRoot = path.resolve(new URL('..', import.meta.url).pathname);
+const repoRoot = path.resolve(fileURLToPath(new URL('..', import.meta.url)));
 const gate = path.join(repoRoot, 'scripts', 'check-shell-syntax.sh');
 
 const runGate = (args = [], options = {}) => spawnSync('bash', [gate, ...args], {
   cwd: repoRoot,
   encoding: 'utf8',
   ...options
+});
+
+test('repository root resolves correctly when the checkout path contains spaces', () => {
+  assert.equal(path.basename(repoRoot), 'worktree');
+  assert.equal(fs.realpathSync(repoRoot), repoRoot);
+  assert.equal(fs.existsSync(gate), true);
 });
 
 test('shell syntax gate rejects a syntax error in any checked file', () => {
